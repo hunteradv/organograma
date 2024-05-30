@@ -4,21 +4,20 @@ import { SuspendedList } from '../SuspendedList/SuspendedList';
 import { TextField } from '../TextField/TextField';
 import './Form.css'
 
-export const Form = () => {
-
-    const teams = [
-        'Programação',
-        'Front-end',
-        'Data Science',
-        'Devops',
-        'UX e Design',
-        'Mobile',
-        'Inovação e Gestão'
-    ];
-
+export const Form = (props) => {
     const onSave = (event) => {
         event.preventDefault();
-        console.log("submit", name, role, image, team);
+        props.onAddedContributor({
+            name: name,
+            role: role,
+            image: image,
+            team: team
+        });
+
+        setName('');
+        setRole('');
+        setImage('');
+        setTeam('');
     }
 
     const [name, setName] = useState('');
@@ -33,7 +32,7 @@ export const Form = () => {
                 <TextField value={name} onChanged={value => setName(value)} required={true} label="Nome" placeholder="Digite seu nome"/>
                 <TextField value={role} onChanged={value => setRole(value)} required={true} label="Cargo" placeholder="Digite seu cargo"/>
                 <TextField value={image} onChanged={value => setImage(value)} required={true} label="Imagem" placeholder="Digite o endereço da imagem"/>
-                <SuspendedList required={true} label="Time" items={teams} value={team} onChanged={value => setTeam(value)}/>
+                <SuspendedList required={true} label="Time" items={props.teams} value={team} onChanged={value => setTeam(value)}/>
                 <Button>Criar Card</Button>
             </form>
         </section>
